@@ -1,14 +1,14 @@
 <!-- templates/product-row.html -->
-<tr id="product-{{.ID}}" class="htmx-swapping:opacity-0 transition-opacity duration-500">
-    <td class="border p-2">{{.ID}}</td>
-    <td class="border p-2">{{.Name}}</td>
-    <td class="border p-2">{{printf "%.2f" .Price}}</td>
-    <td class="border p-2">
+<tr id="product-{{.ID}}" class="hover:bg-gray-50 transition-colors duration-200 htmx-swapping:opacity-0 transition-opacity duration-500">
+    <td class="border-b p-4 text-sm text-gray-700">{{.ID}}</td>
+    <td class="border-b p-4 text-sm text-gray-700">{{.Name}}</td>
+    <td class="border-b p-4 text-sm text-gray-700">{{printf "%.2f" .Price}}</td>
+    <td class="border-b p-4 text-sm text-gray-700 flex space-x-2">
         <button 
             hx-get="/products/{{.ID}}/edit"
             hx-target="#product-{{.ID}}"
             hx-swap="outerHTML"
-            class="bg-yellow-500 text-white p-1 mr-2"
+            class="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 shadow-md flex items-center"
         >
             Sửa
         </button>
@@ -16,10 +16,13 @@
             hx-delete="/products/{{.ID}}"
             hx-target="#product-{{.ID}}"
             hx-swap="outerHTML swap:500ms"
-            class="bg-red-500 text-white p-1"
+            class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 shadow-md flex items-center disabled:opacity-25"
             hx-confirm="Bạn có chắc chắn muốn xóa sản phẩm này?"
+            hx-indicator="#delete-spinner-{{.ID}}"
+            hx-disabled-elt="this"
         >
             Xóa
+            <svg id="delete-spinner-{{.ID}}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle w-4 h-4 ml-2.5 animate-spin htmx-indicator hidden [&.htmx-request]:block"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
         </button>
     </td>
 </tr>

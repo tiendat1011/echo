@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"test/cmd/web"
 	"text/template"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -60,6 +61,8 @@ func (s *Server) handleAddProduct(c echo.Context) error {
 	name := c.FormValue("name")
 	price, _ := strconv.ParseFloat(c.FormValue("price"), 64)
 
+	time.Sleep(2 * time.Second)
+
 	product := web.Product{
 		Name:  name,
 		Price: price,
@@ -99,6 +102,8 @@ func (s *Server) handleUpdateProduct(c echo.Context) error {
 
 func (s *Server) handleDeleteProduct(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
+	time.Sleep(3 * time.Second)
+
 	if !s.productStore.Delete(id) {
 		return c.NoContent(http.StatusNotFound)
 	}

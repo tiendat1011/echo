@@ -1,32 +1,32 @@
 <!-- templates/product-edit.html -->
-<tr id="product-{{.ID}}">
+<tr id="product-{{.ID}}" class="hover:bg-gray-50 transition-colors duration-200">
     <form 
         hx-put="/products/{{.ID}}"
         hx-target="#product-{{.ID}}"
         hx-swap="outerHTML"
     >
-        <td class="border p-2">{{.ID}}</td>
-        <td class="border p-2">
+        <td class="border-b p-4 text-sm text-gray-700">{{.ID}}</td>
+        <td class="border-b p-4">
             <input 
                 type="text" 
                 name="name" 
                 value="{{.Name}}" 
-                class="border p-1 w-full"
+                class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
         </td>
-        <td class="border p-2">
+        <td class="border-b p-4">
             <input 
                 type="number" 
                 name="price" 
                 value="{{printf "%.2f" .Price}}" 
                 step="0.01"
-                class="border p-1 w-full"
+                class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
         </td>
-        <td class="border p-2">
+        <td class="border-b p-4">
             <button 
                 type="submit"
-                class="bg-green-500 text-white p-1 mr-2"
+                class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 mr-2 shadow-md"
             >
                 Lưu
             </button>
@@ -35,7 +35,7 @@
                 hx-get="/products/{{.ID}}"
                 hx-target="#product-{{.ID}}"
                 hx-swap="outerHTML"
-                class="bg-gray-500 text-white p-1"
+                class="bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600 shadow-md"
             >
                 Hủy
             </button>
