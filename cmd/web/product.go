@@ -1,7 +1,13 @@
 package web
 
 import (
+	"sort"
 	"sync"
+)
+
+const (
+	ASC  = "asc"
+	DESC = "desc"
 )
 
 type Product struct {
@@ -11,9 +17,11 @@ type Product struct {
 }
 
 type ProductStore struct {
-	mu       sync.RWMutex
-	products map[int]Product
-	nextID   int
+	mu        sync.RWMutex
+	products  map[int]Product
+	nextID    int
+	sortField string
+	sortOrder string
 }
 
 func NewProductStore() *ProductStore {
@@ -72,4 +80,60 @@ func (ps *ProductStore) GetByID(id int) (Product, bool) {
 	defer ps.mu.RUnlock()
 	product, exists := ps.products[id]
 	return product, exists
+}
+
+func (ps *ProductStore) GetAllSorted(sortParam string) []Product {
+	ps.mu.RLock()
+	defer ps.mu.RUnlock()
+
+	products := make([]Product, 0, len(ps.products))
+	for _, product := range ps.products {
+		products = append(products, product)
+	}
+
+	// Toggle sort order if same field is clicked
+	if sortParam == ps.sortField {
+		if ps.sortOrder == ASC {
+			ps.sortOrder = DESC
+		} else {
+			ps.sortOrder = ASC
+		}
+	} else {
+		ps.sortField = sortParam
+		ps.sortOrder = ASC
+	}
+
+	// Sort based on field
+	sort.Slice(products, func(i, j int) bool {
+		var comparison bool
+		switch ps.sortField {
+		case "id":
+			comparison = products[i].ID < products[j].ID
+		case "name":
+			comparison = products[i].Name < products[j].Name
+		case "price":
+			comparison = products[i].Price < products[j].Price
+		default:
+			comparison = products[i].ID < products[j].ID
+		}
+
+		if ps.sortOrder == DESC {
+			return !comparison
+		}
+		return comparison
+	})
+
+	return products
+}
+
+func (ps *ProductStore) GetSortField() string {
+	ps.mu.RLock()
+	defer ps.mu.RUnlock()
+	return ps.sortField
+}
+
+func (ps *ProductStore) GetSortOrder() string {
+	ps.mu.RLock()
+	defer ps.mu.RUnlock()
+	return ps.sortOrder
 }

@@ -52,8 +52,17 @@ func (s *Server) RegisterRoutes() http.Handler {
 }
 
 func (s *Server) handleIndex(c echo.Context) error {
+	sortParam := c.QueryParam("sort")
+	products := s.productStore.GetAllSorted(sortParam)
+
+	if c.Request().Header.Get("HX-Request") == "true" {
+		return c.Render(http.StatusOK, "product-list.html", map[string]interface{}{
+			"Products": products,
+		})
+	}
+
 	return c.Render(http.StatusOK, "index.html", map[string]interface{}{
-		"Products": s.productStore.GetAll(),
+		"Products": products,
 	})
 }
 
@@ -86,6 +95,8 @@ func (s *Server) handleUpdateProduct(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	name := c.FormValue("name")
 	price, _ := strconv.ParseFloat(c.FormValue("price"), 64)
+
+	time.Sleep(2 * time.Second)
 
 	product := web.Product{
 		ID:    id,

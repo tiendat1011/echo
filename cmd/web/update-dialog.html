@@ -1,17 +1,71 @@
-<!-- Dialog -->
-<dialog id="my-dialog" class="p-6">
-  <h2 class="text-lg font-bold">Gửi yêu cầu</h2>
+<dialog id="my-dialog" class="p-8 rounded-xl shadow-2xl w-full max-w-md backdrop:bg-gray-800/50 backdrop:backdrop-blur-sm">
+  <div class="w-full">
+      <!-- Header -->
+      <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800">Cập nhật sản phẩm</h2>
+          <p class="text-gray-600 text-sm mt-1">Vui lòng điền thông tin bên dưới</p>
+      </div>
 
-  <!-- Form bên trong dialog -->
-  <form hx-put="/products/{{.ID}}" hx-target="#product-{{.ID}}" hx-swap="outerHTML" class="space-y-4 ">
-    <input type="text" name="name" value="{{.Name}}"  placeholder="Nhập tên" class="p-2 border rounded w-full" required>
-    <input type="number" name="price" value="{{printf "%.2f" .Price}}" step="0.01" placeholder="Nhập gia" class="p-2 border rounded w-full" required>
-    <span class="flex flex-row">
-        <button onclick="document.getElementById('my-dialog').close()" type="submit" class="bg-green-500 text-white flex-1 p-2 m-1 rounded">Gửi</button>
-        <button onclick="document.getElementById('my-dialog').close()" class="bg-red-500 text-white flex-1 p-2 m-1 rounded">Đóng</button>
-    </span>
-    
-  </form>
+      <!-- Form -->
+      <form 
+          hx-put="/products/{{.ID}}" 
+          hx-target="#product-{{.ID}}" 
+          hx-swap="outerHTML"
+          hx-on::after-request="document.getElementById('my-dialog').close()"
+          class="space-y-6"
+          hx-indicator="find #spinner"
+          hx-disabled-elt="find button"
+      >
+          <!-- Name Input -->
+          <div class="space-y-2">
+              <label for="name" class="text-sm font-medium text-gray-700 block">
+                  Tên sản phẩm
+              </label>
+              <input 
+                  type="text" 
+                  id="name"
+                  name="name" 
+                  value="{{.Name}}"  
+                  placeholder="Nhập tên sản phẩm" 
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200" 
+                  required
+              >
+          </div>
 
-  <!-- Đóng Dialog -->
+          <!-- Price Input -->
+          <div class="space-y-2">
+              <label for="price" class="text-sm font-medium text-gray-700 block">
+                  Giá
+              </label>
+              <input 
+                  type="number" 
+                  id="price"
+                  name="price" 
+                  value="{{printf "%.2f" .Price}}" 
+                  step="0.01" 
+                  placeholder="Nhập giá" 
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200" 
+                  required
+              >
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex space-x-3 pt-4">
+              <button 
+                  type="submit"
+                  class="flex bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors duration-200 shadow-md active:scale-95 transform disabled:opacity-25 items-center"
+              >
+                  Lưu thay đổi
+                  {{template "spinner.html" .}}   
+              </button>
+              <button 
+                  type="button"
+                  hx-on:click="document.getElementById('my-dialog').close()"
+                  class="flex bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg font-medium transition-colors duration-200 active:scale-95 transform items-center"
+              >
+                  Hủy
+              </button>
+          </div>
+      </form>
+  </div>
 </dialog>

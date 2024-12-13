@@ -44,9 +44,39 @@
     <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
         <thead class="bg-gray-100">
             <tr>
-                <th class="border-b p-4 text-left text-sm font-medium text-gray-600">ID</th>
-                <th class="border-b p-4 text-left text-sm font-medium text-gray-600">Tên</th>
-                <th class="border-b p-4 text-left text-sm font-medium text-gray-600">Giá</th>
+                <th class="border-b p-4 text-left text-sm font-medium text-gray-600">
+                    <button 
+                        class="flex items-center space-x-1 hover:text-blue-600"
+                        hx-get="/?sort=id"
+                        hx-target="#product-list"
+                        hx-push-url="true"
+                    >
+                        <span>ID</span>
+                        {{template "sort-icon.html" .}}
+                    </button>
+                </th>
+                <th class="border-b p-4 text-left text-sm font-medium text-gray-600">
+                    <button 
+                        class="flex items-center space-x-1 hover:text-blue-600"
+                        hx-get="/?sort=name"
+                        hx-target="#product-list"
+                        hx-push-url="true"
+                    >
+                        <span>Tên</span>
+                        {{template "sort-icon.html" .}}
+                    </button>
+                </th>
+                <th class="border-b p-4 text-left text-sm font-medium text-gray-600">
+                    <button 
+                        class="flex items-center space-x-1 hover:text-blue-600"
+                        hx-get="/?sort=price"
+                        hx-target="#product-list"
+                        hx-push-url="true"
+                    >
+                        <span>Giá</span>
+                        {{template "sort-icon.html" .}}
+                    </button>
+                </th>
                 <th class="border-b p-4 text-left text-sm font-medium text-gray-600">Hành Động</th>
             </tr>
         </thead>
