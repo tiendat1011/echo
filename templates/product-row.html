@@ -1,0 +1,25 @@
+<!-- templates/product-row.html -->
+<tr id="product-{{.ID}}" class="transition duration-1000 ease-in-out hover:bg-gray-100" >
+    <td class="border p-2">{{.ID}}</td>
+    <td class="border p-2">{{.Name}}</td>
+    <td class="border p-2">{{printf "%.2f" .Price}}</td>
+    <td class="border p-2">
+        <button 
+            hx-get="/products/{{.ID}}/edit"
+            hx-target="#product-{{.ID}}"
+            hx-swap="outerHTML"
+            class="bg-yellow-500 text-white p-1 mr-2"
+        >
+            Sửa
+        </button>
+        <span hx-confirm="Are you sure?" hx-target=".btn-danger" hx-swap="outerHTML swap:1s">
+            <button 
+                hx-delete="/products/{{.ID}}"
+                hx-target="#product-{{.ID}}"
+                class="btn-danger bg-red-500 text-white p-1"
+            >
+                Xóa
+            </button>
+        </span>
+    </td>
+</tr>

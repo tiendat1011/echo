@@ -1,0 +1,44 @@
+<!-- templates/product-edit.html -->
+<tr id="product-{{.ID}}">
+    <form 
+        hx-put="/products/{{.ID}}"
+        hx-target="#product-{{.ID}}"
+        hx-swap="outerHTML"
+    >
+        <td class="border p-2">{{.ID}}</td>
+        <td class="border p-2">
+            <input 
+                type="text" 
+                name="name" 
+                value="{{.Name}}" 
+                class="border p-1 w-full"
+            >
+        </td>
+        <td class="border p-2">
+            <input 
+                type="number" 
+                name="price" 
+                value="{{printf "%.2f" .Price}}" 
+                step="0.01"
+                class="border p-1 w-full"
+            >
+        </td>
+        <td class="border p-2">
+            <button 
+                type="submit"
+                class="bg-green-500 text-white p-1 mr-2"
+            >
+                Lưu
+            </button>
+            <button 
+                type="button"
+                hx-get="/products/{{.ID}}"
+                hx-target="#product-{{.ID}}"
+                hx-swap="outerHTML"
+                class="bg-gray-500 text-white p-1"
+            >
+                Hủy
+            </button>
+        </td>
+    </form>
+</tr>
