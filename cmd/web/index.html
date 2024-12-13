@@ -39,6 +39,8 @@
         </button>
     </form>
 
+    <div id="update-dialog"></div>
+
     <table class="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
         <thead class="bg-gray-100">
             <tr>
@@ -54,6 +56,13 @@
             {{end}}
         </tbody>
     </table>
+    <script>
+        document.body.addEventListener('htmx:afterSwap', function (event) {
+        if (event.target.id === "update-dialog") {
+            document.getElementById('my-dialog').showModal();
+        }
+    });
+    </script>
 </body>
 </html>
 

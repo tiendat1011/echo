@@ -116,5 +116,5 @@ func (s *Server) handleEditProduct(c echo.Context) error {
 	if !exists {
 		return c.NoContent(http.StatusNotFound)
 	}
-	return c.Render(http.StatusOK, "product-edit.html", product)
+	return c.Render(http.StatusOK, "update-dialog.html", product)
 }

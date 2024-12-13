@@ -1,0 +1,17 @@
+<!-- Dialog -->
+<dialog id="my-dialog" class="p-6">
+  <h2 class="text-lg font-bold">Gửi yêu cầu</h2>
+
+  <!-- Form bên trong dialog -->
+  <form hx-put="/products/{{.ID}}" hx-target="#product-{{.ID}}" hx-swap="outerHTML" class="space-y-4 ">
+    <input type="text" name="name" value="{{.Name}}"  placeholder="Nhập tên" class="p-2 border rounded w-full" required>
+    <input type="number" name="price" value="{{printf "%.2f" .Price}}" step="0.01" placeholder="Nhập gia" class="p-2 border rounded w-full" required>
+    <span class="flex flex-row">
+        <button onclick="document.getElementById('my-dialog').close()" type="submit" class="bg-green-500 text-white flex-1 p-2 m-1 rounded">Gửi</button>
+        <button onclick="document.getElementById('my-dialog').close()" class="bg-red-500 text-white flex-1 p-2 m-1 rounded">Đóng</button>
+    </span>
+    
+  </form>
+
+  <!-- Đóng Dialog -->
+</dialog>
